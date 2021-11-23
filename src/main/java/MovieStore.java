@@ -13,7 +13,6 @@ public class MovieStore {
 
     public void add(Movie movie) { movies.add(movie); }
 
-
     private List<Movie> findBy(Predicate predicate) {
         List<Movie> filteredMovies = movies.
                 stream().
@@ -25,35 +24,17 @@ public class MovieStore {
 
 
     public List<Movie> findByPartialTitle(String partialTittle) {
-        Predicate predicate = new Predicate() {
-            @Override
-            public boolean matches(Movie movie) {
-                return movie.title.toLowerCase().contains(partialTittle.toLowerCase());
-            }
-        };
-
+        Predicate predicate = movie -> movie.title.toLowerCase().contains(partialTittle.toLowerCase());
         return findBy(predicate);
     }
 
     public List<Movie> findByDirector(String director) {
-        Predicate predicate = new Predicate() {
-            @Override
-            public boolean matches(Movie movie) {
-                return movie.director.equals(director);
-            }
-        };
-
+        Predicate predicate = movie -> movie.director.equals(director);
         return findBy(predicate);
     }
 
     public List<Movie> findByReleaseYear(int from, int to) {
-        Predicate predicate = new Predicate() {
-            @Override
-            public boolean matches(Movie movie) {
-                return movie.releaseYear > from && movie.releaseYear < to;
-            }
-        };
-
+        Predicate predicate = movie -> movie.releaseYear > from && movie.releaseYear < to;
         return findBy(predicate);
     }
 
